@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ਮੈਥਲਿਟ (MathLit) ਐਡਮਿਨ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+      textarea {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-100 min-h-screen">
+    <div class="max-w-6xl mx-auto py-6 px-4">
+      <header class="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-indigo-700 flex items-center gap-2">
+            <span class="material-symbols-outlined">edit_square</span>
+            <span>ਮੈਥਲਿਟ (MathLit) ਐਡਮਿਨ ਪੈਨਲ</span>
+          </h1>
+          <p class="text-sm text-slate-600 mt-1">
+            ਇੱਥੇ ਤੁਸੀਂ ਮੈਥਲਿਟ (MathLit) ਲਈ ਨਵਾਂ ਪਾਠ ਜਾਂ ਸਵਾਲ ਜੋੜ ਸਕਦੇ ਹੋ ਅਤੇ ਸੋਧ ਕਰ ਸਕਦੇ ਹੋ।
+        </p>
+        </div>
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-sm text-slate-700 hover:bg-slate-50"
+        >
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          ਮੁੱਖ ਸਫ਼ੇ ਤੇ ਵਾਪਸ
+        </a>
+      </header>
+
+      <!-- Password + controls -->
+      <section
+        class="bg-white rounded-2xl shadow-md border border-slate-200 p-4 mb-4"
+      >
+        <div class="grid md:grid-cols-[1fr_auto] gap-4 items-center">
+          <div class="space-y-2">
+            <label class="block text-sm font-semibold text-slate-700">
+              ਐਡਮਿਨ ਪਾਸਵਰਡ (Admin Password)
+            </label>
+            <input
+              type="password"
+              id="admin-password"
+              class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2 justify-end">
+            <button
+              id="btn-load-existing"
+              class="px-4 py-2 rounded-xl bg-slate-800 text-white text-sm font-semibold hover:bg-slate-900 inline-flex items-center justify-center gap-1"
+            >
+              <span class="material-symbols-outlined text-sm">download</span>
+              ਮੌਜੂਦਾ ਕਨਟੈਂਟ ਲੋਡ ਕਰੋ
+            </button>
+            <button
+              id="btn-load-sample"
+              class="px-4 py-2 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-semibold hover:bg-indigo-100 inline-flex items-center justify-center gap-1"
+            >
+              <span class="material-symbols-outlined text-sm">description</span>
+              ਸੈਂਪਲ ਟੈਂਪਲੈਟ ਲੋਡ ਕਰੋ
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Editor -->
+      <section
+        class="bg-white rounded-2xl shadow-md border border-slate-200 p-4 mb-4"
+      >
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-sm font-semibold text-slate-700">
+            JSON ਕਨਟੈਂਟ (content.json)
+          </h2>
+          <div class="flex gap-2">
+            <button
+              id="btn-validate"
+              class="px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">check</span>
+              ਚੈਕ / Validate
+            </button>
+            <button
+              id="btn-save"
+              class="px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">save</span>
+              ਸੇਵ ਕਰੋ
+            </button>
+          </div>
+        </div>
+
+        <textarea
+          id="content-editor"
+          class="w-full h-[420px] p-3 rounded-xl border border-slate-300 text-xs leading-relaxed resize-y"
+          spellcheck="false"
+          placeholder='{"CLASS_7": { ... }}'
+        ></textarea>
+
+        <p id="status-message" class="mt-2 text-xs font-medium text-slate-500"></p>
+      </section>
+
+      <!-- Hint about structure -->
+      <section class="text-xs text-slate-500 bg-slate-50 p-3 rounded-xl">
+        <p class="mb-1 font-semibold">
+          ⚙️ Structure reminder (data must match <code>sample_content.json</code>):
+        </p>
+        <ul class="list-disc pl-4 space-y-1">
+          <li>Top-level keys: <code>CLASS_6</code>, <code>CLASS_7</code>, …</li>
+          <li>Each class has: <code>id</code>, <code>name</code>, <code>chapters: []</code></li>
+          <li>
+            Each chapter: <code>{ id, name, poem, questions: [ { t, o, c } ] }</code>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <script>
+      const editor = document.getElementById("content-editor");
+      const statusEl = document.getElementById("status-message");
+      const pwdInput = document.getElementById("admin-password");
+
+      function setStatus(msg, type = "info") {
+        const colors = {
+          info: "text-slate-500",
+          success: "text-emerald-600",
+          error: "text-red-600",
+        };
+        statusEl.className =
+          "mt-2 text-xs font-semibold " + (colors[type] || colors.info);
+        statusEl.textContent = msg;
+      }
+
+      // Load existing content from /api/content
+      document
+        .getElementById("btn-load-existing")
+        .addEventListener("click", async () => {
+          try {
+            setStatus("Loading existing content from server...", "info");
+            const res = await fetch("/api/content");
+            if (!res.ok) {
+              throw new Error("HTTP " + res.status);
+            }
+            const json = await res.json();
+            editor.value =
+              Object.keys(json).length === 0
+                ? JSON.stringify(
+                    {
+                      CLASS_7: {
+                        id: "CLASS_7",
+                        name: "Class 7",
+                        chapters: [],
+                      },
+                    },
+                    null,
+                    2
+                  )
+                : JSON.stringify(json, null, 2);
+            setStatus("Existing content loaded.", "success");
+          } catch (err) {
+            console.error(err);
+            setStatus("Failed to load content: " + err, "error");
+          }
+        });
+
+      // Load sample_content.json as template
+      document
+        .getElementById("btn-load-sample")
+        .addEventListener("click", async () => {
+          try {
+            setStatus("Loading sample_content.json...", "info");
+            const res = await fetch("sample_content.json", {
+              cache: "no-store",
+            });
+            if (!res.ok) {
+              throw new Error("HTTP " + res.status);
+            }
+            const json = await res.json();
+            editor.value = JSON.stringify(json, null, 2);
+            setStatus("Sample template loaded. Edit and save.", "success");
+          } catch (err) {
+            console.error(err);
+            setStatus("Failed to load sample content: " + err, "error");
+          }
+        });
+
+      // Validate JSON (client-side)
+      document
+        .getElementById("btn-validate")
+        .addEventListener("click", () => {
+          try {
+            const parsed = JSON.parse(editor.value);
+            if (typeof parsed !== "object" || Array.isArray(parsed)) {
+              throw new Error(
+                "Top-level must be an object (e.g. { CLASS_7: {...} })"
+              );
+            }
+            setStatus("JSON looks valid 👍 (basic check only).", "success");
+          } catch (err) {
+            setStatus("Invalid JSON: " + err.message, "error");
+          }
+        });
+
+      // Save to /api/content
+      document
+        .getElementById("btn-save")
+        .addEventListener("click", async () => {
+          const pwd = pwdInput.value.trim();
+          if (!pwd) {
+            setStatus("Please enter admin password first.", "error");
+            return;
+          }
+          let parsed;
+          try {
+            parsed = JSON.parse(editor.value);
+          } catch (err) {
+            setStatus("Invalid JSON: " + err.message, "error");
+            return;
+          }
+
+          try {
+            setStatus("Saving content to server...", "info");
+            const res = await fetch("/api/content", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ password: pwd, content: parsed }),
+            });
+            const data = await res.json();
+            if (!res.ok || !data.ok) {
+              throw new Error(data.error || "Unknown error");
+            }
+            setStatus(
+              "Content saved. New chapters will appear after reload.",
+              "success"
+            );
+          } catch (err) {
+            console.error(err);
+            setStatus("Failed to save: " + err.message, "error");
+          }
+        });
+    </script>
+  </body>
+</html>

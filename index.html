@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pa">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ਮੈਥਲਿਟ (MathLit)</title>
+
+  <!-- Data for classes/chapters/poems -->
+  <script src="data.js"></script>
+  <script src="quizzes.js"></script>
+  <script src="content_bootstrap.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Laila:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <!-- Your custom styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* App sidebar collapse: icon-only mode */
+    #app-sidebar.app-sidebar-collapsed {
+      width: 4.5rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    /* Hide labels & collapse-only text (but allow flyout submenus) */
+    #app-sidebar.app-sidebar-collapsed .sidebar-label,
+    #app-sidebar.app-sidebar-collapsed .sidebar-brand {
+      display: none !important;
+    }
+
+    /* Shrink logo on collapse */
+    #app-sidebar.app-sidebar-collapsed .avatar-ring>div {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    #app-sidebar.app-sidebar-collapsed .avatar-ring img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    #app-sidebar.app-sidebar-collapsed .avatar-ring {
+      margin-bottom: 0;
+    }
+
+    #app-sidebar.app-sidebar-collapsed ul {
+      align-items: center;
+    }
+
+    #app-sidebar.app-sidebar-collapsed .sidebar-icon {
+      margin: 0 auto;
+    }
+
+    /* Make main content full-width on mobile + tablet, keep original on desktop */
+    @media (max-width: 1024px) {
+
+      /* below lg */
+      main.container {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-[#e7efff] text-slate-800 font-['Roboto',system-ui,sans-serif]">
+
+  <div class="min-h-screen flex flex-col lg:flex-row gap-4 p-3 md:p-6">
+    <!-- MOBILE/TABLET HERO (visible below lg) -->
+    <div class="lg:hidden">
+      <div class="container mx-auto max-w-5xl">
+        <section
+          class="lg:hidden hero-galaxy relative h-52 md:h-60 overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-r from-indigo-500 via-indigo-700 to-slate-900 text-white px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-6">
+
+          <!-- Galaxy Animation Background -->
+          <div class="galaxy-bg">
+            <div class="galaxy-blob galaxy-blob-1"></div>
+            <div class="galaxy-blob galaxy-blob-2"></div>
+            <div class="galaxy-blob galaxy-blob-3"></div>
+
+            <!-- Planet + moon system on the right -->
+            <div class="planet-orbit planet-orbit-1">
+              <div class="planet"></div>
+              <div class="moon-orbit">
+                <div class="moon"></div>
+              </div>
+            </div>
+
+            <!-- Distant planet at the bottom-right -->
+            <div class="planet-orbit planet-orbit-2">
+              <div class="planet planet-small"></div>
+              <div class="moon-orbit moon-orbit-wide">
+                <div class="moon moon-small"></div>
+              </div>
+            </div>
+
+            <!-- Maths symbol points: warp group (kept away from text on left) -->
+            <span class="math-symbol math-warp-1 energy-low">π</span>
+            <span class="math-symbol math-warp-2 energy-medium">√x</span>
+            <span class="math-symbol math-warp-3 energy-medium">Σ</span>
+            <span class="math-symbol math-warp-4 energy-low">∞</span>
+            <span class="math-symbol math-warp-5 energy-high">∫</span>
+            <span class="math-symbol math-warp-6 energy-medium">x²</span>
+            <span class="math-symbol math-warp-7 energy-low">α</span>
+
+            <!-- Maths symbol points: blast group -->
+            <span class="math-symbol math-blast math-blast-1 energy-medium">≈</span>
+            <span class="math-symbol math-blast math-blast-2 energy-high">∑</span>
+            <span class="math-symbol math-blast math-blast-3 energy-high">Δ</span>
+            <span class="math-symbol math-blast math-blast-4 energy-medium">≠</span>
+            <span class="math-symbol math-blast math-blast-5 energy-high">θ</span>
+            <span class="math-symbol math-blast math-blast-6 energy-low">λ</span>
+            <span class="math-symbol math-blast math-blast-7 energy-medium">Ω</span>
+          </div>
+
+          <!-- Left: welcome text (kept visually clean) -->
+          <div class="relative z-10 max-w-md space-y-2">
+            <h2 class="text-2xl md:text-3xl font-bold font-laila leading-snug">
+              ਸਤ ਸ੍ਰੀ ਅਕਾਲ!<br /> ਮੈਥਲਿਟ (MathLit) ਵਿੱਚ ਸਵਾਗਤ ਹੈ।
+            </h2>
+            <p class="text-sm md:text-base text-indigo-100/90 mt-1">
+              ਆਪਣੀ ਜਮਾਤ ਚੁਣੋ, ਕਵਿਤਾ ਪੜ੍ਹੋ ਅਤੇ ਟੈਸਟ ਸ਼ੁਰੂ ਕਰੋ।
+            </p>
+          </div>
+
+          <!-- Right: spinning quiz logo -->
+          <div class="relative flex-1 hidden lg:flex items-center justify-end h-full z-10">
+            <div class="relative w-28 h-28 md:w-32 md:h-32">
+              <div
+                class="absolute inset-0 rounded-full border border-indigo-200/60 flex items-center justify-center animate-spin-slow">
+                <span class="text-xs md:text-sm text-indigo-100">
+                  a² + b² = c²
+                </span>
+              </div>
+              <div
+                class="relative w-full h-full rounded-full bg-indigo-400/30 flex items-center justify-center backdrop-blur-sm">
+                <div
+                  class="absolute inset-1 rounded-full border-4 border-dashed border-indigo-200 animate-[spin_12s_linear_infinite]">
+                </div>
+                <div
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white flex flex-col items-center justify-center shadow-lg">
+                  <span class="text-base font-bold text-indigo-600 text-center">ਮੈਥਲਿਟ</span>
+                  <span class="text-base font-bold text-indigo-600 text-center">(MathLit)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
+    <!-- LEFT PROFILE / NAV (no personal profile info) -->
+    <aside id="app-sidebar" class="hero-galaxy w-full lg:w-96 rounded-3xl shadow-2xl flex flex-col justify-between p-5 md:p-6
+            space-y-6 lg:space-y-0 transition-all duration-300 ease-in-out relative overflow-hidden
+            bg-gradient-to-r from-indigo-500 via-indigo-700 to-slate-900 text-white">
+
+      <button id="app-sidebar-toggle" class="absolute hidden xl:flex items-center justify-center w-8 h-8 rounded-full border border-slate-200
+                   hover:bg-slate-50 text-slate-500 bg-white shadow-lg z-50">
+        <span class="material-symbols-outlined text-base">chevron_left</span>
+      </button>
+      <!-- Galaxy background for sidebar -->
+      <div class="galaxy-bg galaxy-bg-sidebar absolute inset-0 z-0 mix-blend-screen">
+        <div class="galaxy-blob galaxy-blob-1"></div>
+        <div class="galaxy-blob galaxy-blob-2"></div>
+        <div class="galaxy-blob galaxy-blob-3"></div>
+
+        <div class="planet-orbit planet-orbit-1">
+          <div class="planet"></div>
+          <div class="moon-orbit">
+            <div class="moon"></div>
+          </div>
+        </div>
+
+        <div class="planet-orbit planet-orbit-2">
+          <div class="planet planet-small"></div>
+          <div class="moon-orbit moon-orbit-wide">
+            <div class="moon moon-small"></div>
+          </div>
+        </div>
+
+        <!-- 20 animated math symbols in sidebar -->
+        <!-- Nuke: big pulsing blasts -->
+        <span class="math-symbol math-nuke-1">∑</span>
+        <span class="math-symbol math-nuke-2">∞</span>
+        <span class="math-symbol math-nuke-3">Ω</span>
+
+        <!-- Planetary: slow orbital / drifting -->
+        <span class="math-symbol math-planetary-1">π</span>
+        <span class="math-symbol math-planetary-2">θ</span>
+        <span class="math-symbol math-planetary-3">λ</span>
+        <span class="math-symbol math-planetary-4">∫</span>
+
+        <!-- Shooting stars -->
+        <span class="math-symbol math-shooting-1">x²</span>
+        <span class="math-symbol math-shooting-2">y³</span>
+        <span class="math-symbol math-shooting-3">≠</span>
+        <span class="math-symbol math-shooting-4">≈</span>
+
+        <!-- Super nova bursts -->
+        <span class="math-symbol math-supernova-1">Δ</span>
+        <span class="math-symbol math-supernova-2">∂</span>
+        <span class="math-symbol math-supernova-3">∇</span>
+
+        <!-- Aurora lights -->
+        <span class="math-symbol math-aurora-1">α</span>
+        <span class="math-symbol math-aurora-2">β</span>
+        <span class="math-symbol math-aurora-3">φ</span>
+
+        <!-- Flares -->
+        <span class="math-symbol math-flare-1">+</span>
+        <span class="math-symbol math-flare-2">−</span>
+        <span class="math-symbol math-flare-3">±</span>
+      </div>
+
+
+      <!-- Actual sidebar content above the galaxy -->
+      <div class="relative z-10 flex flex-col justify-between space-y-6 lg:space-y-0 h-full">
+        <!-- Top: logo + nav -->
+        <div>
+          <!-- App branding instead of personal profile -->
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="avatar-ring rounded-full">
+              <div
+                class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden">
+                <img src="/assets/icons/logo.png" alt="MathLit Logo" class="w-12 h-12 object-contain" />
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-700 sidebar-brand">ਮੈਥਲਿਟ (MathLit)</p>
+              <p class="text-[11px] text-slate-400 sidebar-brand">Math Made Awesome</p>
+            </div>
+          </div>
+
+          <!-- Left nav menu (visual only for now) -->
+          <nav class="mt-2 space-y-1 text-sm font-medium sidebar-surface relative">
+            <ul class="space-y-2">
+              <!-- Live Quiz -->
+              <li class="relative">
+                <button id="live-quiz-toggle" class="sidebar-menu-button">
+                  <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base sidebar-icon">cast_for_education</span>
+                    <span class="sidebar-label">Live Quiz</span>
+                  </span>
+                  <!-- <span class="material-symbols-outlined sidebar-arrow">expand_more</span> -->
+                </button>
+                <div id="live-quiz-panel" class="sidebar-submenu mt-1 ml-6 space-y-1 hidden">
+                  <a href="live_host" class="sidebar-submenu-link">
+                    <span class="material-symbols-outlined">cast_for_education</span>
+                    <span>Teacher (Host)</span>
+                  </a>
+                  <a href="live_join" class="sidebar-submenu-link">
+                    <span class="material-symbols-outlined">smartphone</span>
+                    <span>Student (Join)</span>
+                  </a>
+                </div>
+              </li>
+
+              <!-- Class selector -->
+              <li class="relative">
+                <button id="class-toggle-btn" class="sidebar-menu-button">
+                  <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base sidebar-icon">school</span>
+                    <span id="current-class-label" class="sidebar-label">ਜਮਾਤ</span>
+                  </span>
+                  <!-- <span id="chevron-icon"
+                    class="material-symbols-outlined sidebar-arrow transition-transform duration-200">
+                    expand_more
+                  </span> -->
+                </button>
+                <div id="class-list-panel" class="sidebar-submenu mt-1 ml-6 space-y-1 max-h-64 overflow-y-auto hidden">
+                  <div id="class-list-items" class="py-1"></div>
+                </div>
+              </li>
+
+              <!-- Teacher / Admin -->
+              <li class="relative">
+                <button id="teacher-admin-toggle" class="sidebar-menu-button">
+                  <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-base sidebar-icon">admin_panel_settings</span>
+                    <span class="sidebar-label">ਅਧਿਆਪਕ / ਐਡਮਿਨ</span>
+                  </span>
+                  <!-- <span class="material-symbols-outlined sidebar-arrow">expand_more</span> -->
+                </button>
+                <div id="teacher-admin-panel" class="sidebar-submenu mt-1 ml-6 space-y-1 hidden">
+                  <a href="teacher.html" class="sidebar-submenu-link">
+                    <span class="material-symbols-outlined">table_view</span>
+                    <span>ਨਤੀਜੇ / ਡੈਸ਼ਬੋਰਡ</span>
+                  </a>
+                  <a href="content_admin.html" class="sidebar-submenu-link">
+                    <span class="material-symbols-outlined">edit_square</span>
+                    <span>ਕਨਟੈਂਟ ਐਡਮਿਨ</span>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+
+        <!-- Chapter list merged into app sidebar -->
+        <div class="mt-8 flex-1 flex flex-col sidebar-chapter-section">
+          <aside id="sidebar" class="w-full lg:w-80 transition-all duration-300">
+            <div class="relative h-full rounded-3xl bg-slate-50
+                     border border-slate-100 shadow-sm
+                     p-4 pt-5 flex flex-col">
+              <!-- Header -->
+              <div class="mb-3 flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <span
+                      class="inline-flex items-center justify-center w-7 h-7 rounded-xl bg-white shadow-sm border border-slate-200">
+                      <span class="material-symbols-outlined text-[18px] text-indigo-500">
+                        menu_book
+                      </span>
+                    </span>
+                    <span>ਪਾਠ ਸੂਚੀ</span>
+                  </h3>
+                  <p class="text-[11px] text-slate-500 mt-1">
+                    ਪਾਠ ਚੁਣੋ ਤੇ ਅੱਗੇ ਵਧੋ
+                  </p>
+                </div>
+              </div>
+
+              <!-- Scrollable chapter list -->
+              <div id="chapter-list" class="flex-1 overflow-y-auto space-y-2 pr-1 pb-3 max-h-[calc(100vh-220px)]">
+                <div id="floating-symbols" class="hidden"></div>
+              </div>
+            </div>
+          </aside>
+
+          <button id="sidebar-collapsed-toggle"
+            class="hidden items-center justify-center px-3 py-2 rounded-r-full bg-indigo-600 text-white font-semibold shadow-2xl text-sm absolute top-1/2 -translate-y-1/2 -left-2 wiggle-button"
+            aria-label="ਪਾਠ ਖੋਲ੍ਹੋ (shortcut: .)" aria-keyshortcuts="." title="ਪਾਠ ਖੋਲ੍ਹੋ (shortcut: .)">
+            <span class="material-symbols-outlined text-base mr-1">menu_book</span>
+            ਪਾਠ
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: MAIN DASHBOARD -->
+
+
+    <!-- RIGHT: MAIN DASHBOARD -->
+    <div class="flex-1 lg:pr-6 xl:pr-10">
+      <!-- TOP BAR: title + controls (NO SEARCH / NO PROFILE) -->
+
+      <div class="flex flex-col gap-4 px-0 lg:px-0">
+        <!-- HERO CARD -->
+        <section
+          class="hidden lg:flex hero-galaxy relative h-52 md:h-60 overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-r from-indigo-500 via-indigo-700 to-slate-900 text-white px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-6">
+
+          <!-- Galaxy Animation Background -->
+          <div class="galaxy-bg">
+            <div class="galaxy-blob galaxy-blob-1"></div>
+            <div class="galaxy-blob galaxy-blob-2"></div>
+            <div class="galaxy-blob galaxy-blob-3"></div>
+
+            <!-- Planet + moon system on the right -->
+            <div class="planet-orbit planet-orbit-1">
+              <div class="planet"></div>
+              <div class="moon-orbit">
+                <div class="moon"></div>
+              </div>
+            </div>
+
+            <!-- Distant planet at the bottom-right -->
+            <div class="planet-orbit planet-orbit-2">
+              <div class="planet planet-small"></div>
+              <div class="moon-orbit moon-orbit-wide">
+                <div class="moon moon-small"></div>
+              </div>
+            </div>
+
+            <!-- Maths symbol points: warp group (kept away from text on left) -->
+            <span class="math-symbol math-warp-1 energy-low">π</span>
+            <span class="math-symbol math-warp-2 energy-medium">√x</span>
+            <span class="math-symbol math-warp-3 energy-medium">Σ</span>
+            <span class="math-symbol math-warp-4 energy-low">∞</span>
+            <span class="math-symbol math-warp-5 energy-high">∫</span>
+            <span class="math-symbol math-warp-6 energy-medium">x²</span>
+            <span class="math-symbol math-warp-7 energy-low">α</span>
+
+            <!-- Maths symbol points: blast group -->
+            <span class="math-symbol math-blast math-blast-1 energy-medium">≈</span>
+            <span class="math-symbol math-blast math-blast-2 energy-high">∑</span>
+            <span class="math-symbol math-blast math-blast-3 energy-high">Δ</span>
+            <span class="math-symbol math-blast math-blast-4 energy-medium">≠</span>
+            <span class="math-symbol math-blast math-blast-5 energy-high">θ</span>
+            <span class="math-symbol math-blast math-blast-6 energy-low">λ</span>
+            <span class="math-symbol math-blast math-blast-7 energy-medium">Ω</span>
+          </div>
+
+          <!-- Left: welcome text (kept visually clean) -->
+          <div class="relative z-10 max-w-md space-y-2">
+            <h2 class="text-2xl md:text-3xl font-bold font-laila leading-snug">
+              ਸਤ ਸ੍ਰੀ ਅਕਾਲ!<br />
+              ਮੈਥਲਿਟ (MathLit) ਵਿੱਚ ਸਵਾਗਤ ਹੈ।
+            </h2>
+            <p class="text-sm md:text-base text-indigo-100/90 mt-1">
+              ਆਪਣੀ ਜਮਾਤ ਚੁਣੋ, ਕਵਿਤਾ ਪੜ੍ਹੋ ਅਤੇ ਟੈਸਟ ਸ਼ੁਰੂ ਕਰੋ।
+            </p>
+          </div>
+
+          <!-- Right: spinning quiz logo -->
+          <div class="relative flex-1 hidden lg:flex items-center justify-end h-full z-10">
+            <div class="relative w-28 h-28 md:w-32 md:h-32">
+              <div
+                class="absolute inset-0 rounded-full border border-indigo-200/60 flex items-center justify-center animate-spin-slow">
+                <span class="text-xs md:text-sm text-indigo-100">
+                  a² + b² = c²
+                </span>
+              </div>
+              <div
+                class="relative w-full h-full rounded-full bg-indigo-400/30 flex items-center justify-center backdrop-blur-sm">
+                <div
+                  class="absolute inset-1 rounded-full border-4 border-dashed border-indigo-200 animate-[spin_12s_linear_infinite]">
+                </div>
+                <div
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white flex flex-col items-center justify-center shadow-lg">
+                  <span class="text-base font-bold text-indigo-600 text-center">ਮੈਥਲਿਟ</span>
+                  <span class="text-base font-bold text-indigo-600 text-center">(MathLit)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+
+
+
+
+
+        <!-- MAIN CONTENT: reuse your original chapter + poem layout -->
+        <main class="container">
+          <!-- Main View: Chapter Selection -->
+          <div id="page-chapter-selection" class="page">
+            <div class="flex flex-col lg:flex-row gap-5 items-stretch relative min-h-[700px]">
+              <!-- Sidebar -->
+              <!-- Collapsed toggle (only visible when sidebar is collapsed) -->
+              <!-- Main content -->
+              <section
+                class="flex-1 w-full bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl border border-gray-100 min-h-[600px] lg:min-h-[calc(100vh-180px)] relative overflow-hidden">
+
+                <!-- NORMAL CHAPTER / POEM VIEW -->
+                <div id="chapter-view" class="relative h-full">
+                  <div id="poem-empty-state"
+                    class="h-full flex flex-col items-center justify-center text-center text-gray-500 p-4">
+                    <div class="relative mb-3">
+                      <span class="material-symbols-outlined text-7xl md:text-8xl text-gray-200 drop-shadow-sm">
+                        auto_stories
+                      </span>
+                      <span class="material-symbols-outlined text-5xl text-indigo-400 absolute bottom-1 right-0">
+                        light_mode
+                      </span>
+                    </div>
+                    <p class="font-medium text-2xl md:text-3xl mt-3 text-gray-700 font-laila">
+                      ਕਵਿਤਾ ਪੜੋ
+                    </p>
+                    <p class="text-base text-gray-400 mt-1">
+                      ਇੱਕ ਪਾਠ ਚੁਣੋ ਅਤੇ ਕਵਿਤਾ ਪੜ੍ਹੋ
+                    </p>
+                  </div>
+
+                  <div id="poem-panel" class="hidden p-4 md:p-6">
+                    <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                      <h2 id="poem-title"
+                        class="text-2xl md:text-3xl font-bold font-laila text-indigo-700 flex items-center gap-3 pb-2 border-b-4 border-gradient-to-r from-indigo-300 to-purple-300">
+                        <span class="material-symbols-outlined text-3xl md:text-2xl text-indigo-600">
+                          library_books
+                        </span>
+                        <span id="poem-title-text"></span>
+                      </h2>
+
+                      <!-- Right-side controls: Prev / Next / Read -->
+                      <div class="flex items-center gap-2">
+                        <!-- Prev chapter -->
+                        <button id="prev-chapter-btn"
+                          class="flex items-center gap-1 px-3 py-2 rounded-full border border-indigo-200 bg-white text-indigo-700 text-xs md:text-sm font-semibold shadow-sm hover:bg-indigo-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                          aria-label="ਪਿਛਲਾ ਪਾਠ" title="ਪਿਛਲਾ ਪਾਠ" disabled>
+                          <span class="material-symbols-outlined text-base">chevron_left</span>
+                          <span class="hidden md:inline">ਪਿਛਲਾ</span>
+                        </button>
+
+                        <!-- Next chapter -->
+                        <button id="next-chapter-btn"
+                          class="flex items-center gap-1 px-3 py-2 rounded-full border border-indigo-200 bg-white text-indigo-700 text-xs md:text-sm font-semibold shadow-sm hover:bg-indigo-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                          aria-label="ਅਗਲਾ ਪਾਠ" title="ਅਗਲਾ ਪਾਠ" disabled>
+                          <span class="hidden md:inline">ਅਗਲਾ</span>
+                          <span class="material-symbols-outlined text-base">chevron_right</span>
+                        </button>
+
+                        <!-- Read-aloud button -->
+                        <button id="poem-read-btn" onclick="togglePoemReading()"
+                          class="flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-300 bg-white text-indigo-700 text-sm font-semibold shadow-sm hover:bg-indigo-50 transition">
+                          <span class="material-symbols-outlined text-xl">volume_up</span>
+                          <span class="btn-label">ਕਵਿਤਾ ਸੁਣੋ</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div id="poem-content" class="font-laila max-h-[60vh] overflow-y-auto"></div>
+                  </div>
+
+                  <!-- Start Quiz FAB -->
+                  <button id="start-quiz-fab" onclick="startQuiz(event)"
+                    class="fab text-white rounded-full shadow-xl absolute bottom-6 right-6 px-4 py-3 font-semibold flex items-center gap-1.5 ripple-surface hidden transform hover:scale-107 transition-transform duration-200">
+                    <span class="material-symbols-outlined text-2xl">quiz</span>
+                    <span class="text-base font-laila">ਟੈਸਟ ਸ਼ੁਰੂ ਕਰੋ</span>
+                  </button>
+
+
+                </div>
+
+                <!-- EMBEDDED QUIZ VIEW -->
+                <iframe id="quiz-frame" src="about:blank" class="absolute inset-0 w-full h-full hidden" frameborder="0">
+                </iframe>
+
+                <!-- Back button (visible only while quiz is open) -->
+                <button id="close-quiz-btn" onclick="closeEmbeddedQuiz()"
+                  class="hidden absolute top-4 right-4 z-20 bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-slate-700 shadow">
+                  ← ਵਾਪਸ ਪਾਠਾਂ ਵੱਲ
+                </button>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Your main JS logic -->
+  <script src="app.js"></script>
+
+</body>
+
+</html>

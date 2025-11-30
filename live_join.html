@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pa">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Live Quiz - Student Join</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Laila:wght@400;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <script src="data.js"></script>
+    <script src="quizzes.js"></script>
+    <style>
+      body {
+        font-family: "Noto Sans Devanagari", system-ui, sans-serif;
+      }
+      .font-laila {
+        font-family: "Laila", "Noto Sans Devanagari", serif;
+      }
+      .option-btn.selected {
+        border-color: #4f46e5;
+        background-color: #e0e7ff;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-purple-50 via-white to-indigo-50 min-h-screen text-slate-900">
+    <div class="max-w-xl mx-auto p-4 md:p-6">
+      <header class="mb-5 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg"
+          >
+            <span class="material-symbols-outlined text-white text-2xl">
+              smartphone
+            </span>
+          </div>
+          <div>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-indigo-700 font-laila">
+              MathLit Live Quiz (Student)
+            </h1>
+            <p class="text-xs md:text-sm text-slate-600">
+              Join code ਨਾਲ ਕਲਾਸ ਕਵੀਜ਼ ਵਿੱਚ ਹਿੱਁਸਾ ਲਓ
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Join form -->
+      <section
+        id="join-panel"
+        class="bg-white/90 border border-indigo-100 rounded-3xl shadow-lg p-4 md:p-5 mb-5 backdrop-blur"
+      >
+        <h2 class="text-base md:text-lg font-bold text-slate-800 mb-3 font-laila">
+          ਕੋਡ ਨਾਲ ਜੁੜੋ (Join with Code)
+        </h2>
+        <div class="space-y-3 text-sm">
+          <div>
+            <label class="block text-xs font-semibold mb-1 text-slate-600">
+              ਨਾਮ (Name)
+            </label>
+            <input
+              id="player-name-input"
+              type="text"
+              class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="ਤੁਹਾਡਾ ਨਾਮ"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1 text-slate-600">
+              Join Code (Teacher ਤੋਂ ਮਿਲਿਆ 6 digit)
+            </label>
+            <input
+              id="game-code-input"
+              type="text"
+              maxlength="6"
+              class="w-full border border-slate-300 rounded-xl px-3 py-2 text-lg tracking-[0.35em] text-center bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="000000"
+            />
+          </div>
+          <button
+            id="btn-join"
+            class="mt-2 inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-md w-full justify-center transform transition hover:scale-[1.02]"
+          >
+            <span class="material-symbols-outlined text-base"> login </span>
+            ਕਵੀਜ਼ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ
+          </button>
+          <p id="join-error" class="mt-1 text-xs text-rose-600 hidden"></p>
+        </div>
+      </section>
+
+      <!-- Quiz play panel -->
+      <section
+        id="play-panel"
+        class="hidden bg-white/95 border border-emerald-100 rounded-3xl shadow-lg p-4 md:p-5 backdrop-blur"
+      >
+        <div class="flex items-center justify-between mb-3 text-xs">
+          <div>
+            <p class="font-semibold text-slate-700">
+              <span id="label-player-name"></span>
+            </p>
+            <p class="text-[11px] text-slate-500">
+              Join Code:
+              <span id="label-game-code" class="font-mono font-semibold"></span>
+            </p>
+          </div>
+          <div class="text-right text-[11px]">
+            <p>
+              Score:
+              <span id="label-score" class="font-bold text-indigo-700">0</span>
+            </p>
+            <p id="label-status" class="text-slate-500">Waiting for teacher...</p>
+          </div>
+        </div>
+
+        <div class="border border-slate-200 rounded-3xl p-4 bg-slate-50/90 shadow-sm">
+          <p
+            id="student-question-text"
+            class="text-lg md:text-xl font-bold text-slate-900 font-laila mb-3 min-h-[60px]"
+          >
+            —
+          </p>
+          <div id="student-options" class="space-y-2"></div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Student-side logic
+
+      function getAllClasses() {
+        if (typeof CLASSES !== "undefined") {
+          return CLASSES;
+        }
+        return { CLASS_7: CLASS_7_DATA };
+      }
+      const classesMap = getAllClasses();
+
+      function findClassObjById(classId) {
+        let found = null;
+        Object.keys(classesMap).forEach((k) => {
+          const c = classesMap[k];
+          if (c.id === classId || k === classId) {
+            found = c;
+          }
+        });
+        return found || Object.values(classesMap)[0];
+      }
+
+      function findChapterObj(classId, chapterId) {
+        const cls = findClassObjById(classId);
+        if (!cls || !cls.chapters) return null;
+        return cls.chapters.find((ch) => ch.id === chapterId) || null;
+      }
+
+      const joinPanel = document.getElementById("join-panel");
+      const btnJoin = document.getElementById("btn-join");
+      const joinError = document.getElementById("join-error");
+      const nameInput = document.getElementById("player-name-input");
+      const codeInput = document.getElementById("game-code-input");
+
+      const playPanel = document.getElementById("play-panel");
+      const labelPlayerName = document.getElementById("label-player-name");
+      const labelGameCode = document.getElementById("label-game-code");
+      const labelScore = document.getElementById("label-score");
+      const labelStatus = document.getElementById("label-status");
+      const qText = document.getElementById("student-question-text");
+      const optionsContainer = document.getElementById("student-options");
+
+      let player = null; // {playerId, gameCode, classId, chapterId}
+      let currentQuestionIndex = -1;
+      let hasAnsweredCurrent = false;
+
+      async function joinGame() {
+        joinError.classList.add("hidden");
+        const name = nameInput.value.trim();
+        const code = codeInput.value.trim();
+
+        if (!code || code.length < 4) {
+          joinError.textContent = "ਸਹੀ join code ਭਰੋ।";
+          joinError.classList.remove("hidden");
+          return;
+        }
+
+        try {
+          btnJoin.disabled = true;
+          btnJoin.textContent = "Joining...";
+
+          const resp = await fetch("/api/live/join", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ playerName: name, gameCode: code }),
+          });
+          const data = await resp.json();
+          if (!data.ok) {
+            throw new Error(data.error || "Failed to join");
+          }
+
+          player = {
+            playerId: data.playerId,
+            gameCode: data.gameCode,
+            classId: data.classId,
+            chapterId: data.chapterId,
+          };
+
+          labelPlayerName.textContent = name || "Player";
+          labelGameCode.textContent = player.gameCode;
+          labelScore.textContent = "0";
+          labelStatus.textContent = "Waiting for teacher...";
+
+          joinPanel.classList.add("hidden");
+          playPanel.classList.remove("hidden");
+
+          startPollingState();
+        } catch (err) {
+          console.error(err);
+          joinError.textContent =
+            "Game ਨਹੀਂ ਮਿਲਿਆ ਜਾਂ ਖਤਮ ਹੋ ਚੁੱਕਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਡ ਚੈੱਕ ਕਰੋ।";
+          joinError.classList.remove("hidden");
+        } finally {
+          btnJoin.disabled = false;
+          btnJoin.textContent = "ਕਵੀਜ਼ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ";
+        }
+      }
+
+      async function pollStateOnce() {
+        if (!player) return;
+        try {
+          const resp = await fetch(
+            `/api/live/state?gameCode=${encodeURIComponent(
+              player.gameCode
+            )}&playerId=${encodeURIComponent(player.playerId)}`
+          );
+          const data = await resp.json();
+          if (!data.ok) return;
+
+          if (data.you) {
+            labelScore.textContent = data.you.score;
+            hasAnsweredCurrent = data.you.answered;
+          }
+
+          if (data.status === "waiting") {
+            labelStatus.textContent = "Waiting for teacher...";
+          } else if (data.status === "in_progress") {
+            labelStatus.textContent = hasAnsweredCurrent
+              ? "Answer submitted."
+              : "Answer ਕਰੋ।";
+          } else if (data.status === "finished") {
+            labelStatus.textContent = "Quiz finished.";
+          }
+
+          // Update question if index changed
+          if (
+            typeof data.currentQuestionIndex === "number" &&
+            data.currentQuestionIndex !== currentQuestionIndex &&
+            data.currentQuestionIndex >= 0
+          ) {
+            currentQuestionIndex = data.currentQuestionIndex;
+            hasAnsweredCurrent = data.you ? data.you.answered : false;
+            renderQuestion();
+          }
+        } catch (err) {
+          console.error("Error polling state", err);
+        }
+      }
+
+      function startPollingState() {
+        setInterval(pollStateOnce, 1200);
+      }
+
+      function renderQuestion() {
+        if (!player) return;
+
+        const classId = player.classId;
+        const chapterId = player.chapterId;
+
+        let questions = [];
+        if (
+          typeof QUIZZES !== "undefined" &&
+          QUIZZES[classId] &&
+          QUIZZES[classId][chapterId]
+        ) {
+          questions = QUIZZES[classId][chapterId];
+        }
+
+        if (!Array.isArray(questions) || !questions.length) {
+          qText.textContent = "ਸਵਾਲ ਲੋਡ ਕਰਨ ਵਿੱਚ ਸਮੱਸਿਆ।";
+          optionsContainer.innerHTML = "";
+          return;
+        }
+
+        const q = questions[currentQuestionIndex];
+        if (!q) {
+          qText.textContent = "Teacher ਨੇ ਅਜੇ ਸਵਾਲ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ।";
+          optionsContainer.innerHTML = "";
+          return;
+        }
+
+        qText.textContent = q.t;
+        optionsContainer.innerHTML = "";
+
+        q.o.forEach((opt, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = opt;
+          btn.className =
+            "option-btn w-full text-left px-3 py-2 rounded-xl border border-slate-200 bg-white text-sm transition transform hover:-translate-y-[1px] hover:shadow";
+          btn.dataset.index = idx;
+
+          if (hasAnsweredCurrent) {
+            btn.disabled = true;
+            btn.classList.add("opacity-70");
+          }
+
+          btn.addEventListener("click", () => {
+            handleAnswer(idx, btn);
+          });
+
+          optionsContainer.appendChild(btn);
+        });
+      }
+
+      async function handleAnswer(idx, btnEl) {
+        if (!player || hasAnsweredCurrent) return;
+        hasAnsweredCurrent = true;
+
+        // UI selection
+        const allBtns = optionsContainer.querySelectorAll(".option-btn");
+        allBtns.forEach((b) => b.classList.remove("selected"));
+        btnEl.classList.add("selected");
+
+        try {
+          const resp = await fetch("/api/live/answer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              gameCode: player.gameCode,
+              playerId: player.playerId,
+              selectedIndex: idx,
+            }),
+          });
+          const data = await resp.json();
+          if (!data.ok) return;
+
+          labelScore.textContent = data.score;
+          labelStatus.textContent = data.correct
+            ? "✅ ਸਹੀ ਜਵਾਬ!"
+            : "❌ ਗਲਤ ਜਵਾਬ।";
+
+          // disable buttons
+          const all = optionsContainer.querySelectorAll(".option-btn");
+          all.forEach((b) => {
+            b.disabled = true;
+            b.classList.add("opacity-70");
+          });
+        } catch (err) {
+          console.error("Error submitting answer", err);
+        }
+      }
+
+      btnJoin.addEventListener("click", joinGame);
+    </script>
+  </body>
+</html>

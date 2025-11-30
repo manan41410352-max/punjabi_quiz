@@ -1,0 +1,1330 @@
+/* App sidebar container */
+#app-sidebar {
+    position: relative;
+    z-index: 10;
+}
+
+/* Base styles using Material Design principles */
+body {
+    font-family: "Roboto", "Noto Sans Devanagari", sans-serif;
+    background-color: #f4f5f7;
+    /* Material Grey 100 */
+}
+
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    vertical-align: middle;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ripple effect */
+.ripple-surface {
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Custom component styles */
+.top-app-bar {
+    background-color: #3f51b5;
+    /* Material Indigo 500 */
+}
+
+.chip {
+    transition: all 0.2s ease-in-out;
+}
+
+.chip.active {
+    background-color: #e8eaf6;
+    /* Indigo 50 */
+    color: #3f51b5;
+    /* Indigo 500 */
+    border-color: #3f51b5;
+    /* Indigo 500 */
+}
+
+.fab {
+    background-color: #e91e63;
+    /* Material Pink 500 */
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab:hover {
+    transform: scale(1.05);
+}
+
+/* Collapsible class list hover effect */
+#class-list-panel button:hover {
+    background-color: #eef2ff;
+}
+
+#class-toggle-btn {
+    font-size: 1.125rem;
+    /* 18px */
+}
+
+/* Bigger font for class list items */
+#class-list-panel button {
+    font-size: 1rem;
+    /* 16px */
+    padding: 0.75rem 1rem;
+    /* slightly bigger padding */
+}
+
+/* Poem styles */
+.font-laila {
+    font-family: "Laila", "Noto Sans Devanagari", serif;
+}
+
+#poem-panel {
+    background: linear-gradient(135deg, #ffffff 0%, #f7f8fa 100%);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    transition: all 0.3s ease-in-out;
+}
+
+#poem-title {
+    color: #4a5568;
+    border-color: #e2e8f0;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+#poem-content {
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+#poem-content .poem-line {
+    line-height: 2.8;
+    font-size: 1.4rem;
+    color: #1a202c;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+    word-spacing: 4px;
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.05),
+            rgba(168, 85, 247, 0.05));
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 2px 0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#poem-content .poem-line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    transition: left 0.5s ease;
+    animation: autoSlide 2s ease-in-out infinite;
+}
+
+@keyframes autoSlide {
+
+    0%,
+    100% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+}
+
+#poem-content .poem-line:hover::before {
+    animation: none;
+    left: 100%;
+}
+
+#poem-content .poem-line:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
+    background: linear-gradient(135deg,
+            rgba(99, 102, 241, 0.15),
+            rgba(168, 85, 247, 0.15));
+    background-color: rgba(79, 70, 229, 0.06);
+    /* light indigo */
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#poem-content .poem-line {
+    animation: slideInFromLeft 0.6s ease-out forwards;
+}
+
+#poem-content .poem-line:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+#poem-content .poem-line:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#poem-content .poem-line:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+#poem-content .poem-line:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+#poem-content .poem-line:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+#poem-content .poem-line:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+#poem-content .poem-line:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+#poem-content .poem-line:nth-child(n + 8) {
+    animation-delay: 0.8s;
+}
+
+/* Custom scrollbar */
+#poem-content::-webkit-scrollbar {
+    width: 12px;
+}
+
+#poem-content::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #e0e7ff 0%, #f0f4f8 100%);
+    border-radius: 10px;
+}
+
+#poem-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1 0%, #a855f7 100%);
+    border-radius: 10px;
+    border: 2px solid #f0f4f8;
+}
+
+#poem-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4f46e5 0%, #9333ea 100%);
+}
+
+@keyframes bounceSlow {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes spinSlow {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounceSlow 3s infinite ease-in-out;
+}
+
+.animate-spin-slow {
+    animation: spinSlow 6s linear infinite;
+}
+
+.poem-line.active {
+    background-color: rgba(79, 70, 229, 0.12);
+    color: #1e293b;
+    /* slate-800 */
+}
+
+
+/* Collapsible sidebar animation */
+#sidebar {
+    transition: max-width 0.3s ease-in-out, opacity 0.3s ease-in-out,
+        margin-right 0.3s ease-in-out, transform 0.3s ease-in-out;
+    position: relative;
+    z-index: 20;
+}
+
+/* When collapsed, hide sidebar visually but keep layout smooth */
+#sidebar.sidebar-collapsed {
+    max-width: 0 !important;
+    flex-basis: 0 !important;
+    margin-right: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-10px);
+}
+
+/* Floating ਪਾਠ button animation so it looks clickable */
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: translateY(-50%) translateX(0);
+    }
+
+    25% {
+        transform: translateY(-50%) translateX(-3px);
+    }
+
+    50% {
+        transform: translateY(-50%) translateX(3px);
+    }
+
+    75% {
+        transform: translateY(-50%) translateX(-3px);
+    }
+}
+
+.wiggle-button {
+    animation: wiggle 1.4s ease-in-out infinite;
+}
+
+/* Make the floating ਪਾਠ button appear above content */
+#sidebar-collapsed-toggle {
+    z-index: 50;
+}
+
+/* Flashcard styles inside poem-content (used when no chapter is selected) */
+#poem-content .flashcard {
+    background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 100%);
+    border-radius: 1.25rem;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 220px;
+}
+
+#poem-content .flashcard-class {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4338ca;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+#poem-content .flashcard-question {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+#poem-content .flashcard-answer-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #047857;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+#poem-content .flashcard-answer {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #065f46;
+}
+
+#poem-content .flashcard-meta {
+    font-size: 0.8rem;
+    color: #4b5563;
+    margin-top: 0.25rem;
+}
+
+
+/* Enhanced flashcard UX */
+#poem-content .flashcard {
+    position: relative;
+    overflow: hidden;
+    transform-origin: center;
+    animation: flashcardIn 0.35s ease-out forwards;
+}
+
+#poem-content .flashcard-instruction {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+#poem-content .flashcard-timer {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    border-radius: 9999px;
+    background-color: rgba(148, 163, 184, 0.35);
+    margin-top: 0.75rem;
+    overflow: hidden;
+}
+
+#poem-content .flashcard-timer-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: left;
+    animation: flashcardTimer 7s linear forwards;
+}
+
+@keyframes flashcardIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes flashcardTimer {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+
+#poem-content .flashcard-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #0f766e;
+    margin-bottom: 0.25rem;
+}
+
+/* Make poem title bar sticky on scroll */
+#poem-panel > div:first-child {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    padding-top: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+
+/* Live Quiz dropdown - match class dropdown size */
+#live-quiz-toggle {
+    font-size: 1.125rem; /* Same as class-toggle-btn */
+}
+
+#live-quiz-panel a,
+#live-quiz-panel button {
+    font-size: 1rem;      /* Make menu items bigger */
+    padding: 0.75rem 1rem; /* Same padding as class menu items */
+}
+
+#live-quiz-panel a:hover,
+#live-quiz-panel button:hover {
+    background-color: #eef2ff; /* Same hover color */
+}
+
+
+/* App-level sidebar (left) collapse behaviour */
+#app-sidebar.app-sidebar-collapsed {
+    width: 4.5rem; /* icon-only */
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Hide labels & collapse-only text (but keep submenus for flyout) */
+#app-sidebar.app-sidebar-collapsed .sidebar-label,
+#app-sidebar.app-sidebar-collapsed .avatar-ring + div p,
+#app-sidebar.app-sidebar-collapsed .sidebar-brand {
+    display: none !important;
+}
+
+/* Center icons when collapsed */
+#app-sidebar.app-sidebar-collapsed .sidebar-icon {
+    margin: 0 auto;
+}
+
+#app-sidebar.app-sidebar-collapsed ul {
+    align-items: center;
+}
+
+/* When the app sidebar is collapsed, turn submenus into flyout cards */
+#app-sidebar.app-sidebar-collapsed .sidebar-submenu {
+    position: absolute;
+    top: 0.25rem;
+    left: 100%;
+    margin-left: 0.75rem;
+    width: 230px;
+    max-width: 260px;
+    z-index: 999; /* above main content */
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18);
+    padding: 0.25rem 0;
+    border-left-width: 0; /* hide vertical rule in flyout mode */
+}
+
+/* Sidebar submenu vertical line style like project list */
+/* Shared styles for app sidebar menu buttons and submenu links */
+.sidebar-menu-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569; /* slate-600 */
+    background-color: transparent;
+    transition: background-color 150ms ease, color 150ms ease;
+    justify-content: flex-start !important;
+}
+
+.sidebar-menu-button:hover {
+    background-color: #f1f5f9; /* slate-100 */
+    color: #0f172a;
+}
+
+.sidebar-menu-button .sidebar-arrow {
+    font-size: 0.875rem;
+    color: #94a3b8; /* slate-400 */
+}
+
+/* Submenu items (Quiz, Class, Admin) */
+.sidebar-submenu-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    color: #475569;
+    border-radius: 9999px 0 0 9999px;
+    background-color: transparent;
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.sidebar-submenu-link:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.sidebar-submenu-link .material-symbols-outlined {
+    font-size: 1rem;
+}
+
+.sidebar-submenu {
+    border-left-width: 2px;
+    border-left-style: solid;
+    border-left-color: rgba(148, 163, 184, 0.3); /* slate-300 */
+}
+
+/* Ensure nav buttons don't stretch weirdly */
+#app-sidebar nav button {
+    text-align: left;
+}
+
+/* When collapsed, also shrink toggle button text */
+#app-sidebar.app-sidebar-collapsed #app-sidebar-toggle {
+    align-self: center;
+}
+
+/* === Hero math float animations === */
+@keyframes float1 {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate3d(12px, -10px, 0) rotate(6deg);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+}
+
+@keyframes float2 {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(-3deg);
+    }
+    50% {
+        transform: translate3d(-14px, 8px, 0) rotate(3deg);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotate(-3deg);
+    }
+}
+
+@keyframes float3 {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(6px, -12px, 0) scale(1.05);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+.math-float-1 {
+    animation: float1 10s ease-in-out infinite;
+}
+
+.math-float-2 {
+    animation: float2 12s ease-in-out infinite;
+}
+
+.math-float-3 {
+    animation: float3 14s ease-in-out infinite;
+}
+
+
+/* ==== Galaxy hero background ==== */
+.galaxy-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.galaxy-blob {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.45;
+    animation: galaxyMorph 40s ease-in-out infinite;
+}
+
+.galaxy-blob-1 {
+    background: rgb(255, 200, 255);
+    top: 5%;
+    left: 5%;
+}
+
+.galaxy-blob-2 {
+    background: rgb(165, 205, 255);
+    top: 45%;
+    right: 10%;
+    animation-delay: -5s;
+}
+
+.galaxy-blob-3 {
+    background: rgb(200, 255, 220);
+    bottom: -5%;
+    left: 35%;
+    animation-delay: -10s;
+}
+/* Sidebar galaxy: match hero scale + brightness */
+.galaxy-bg-sidebar .galaxy-blob {
+    width: 260px;
+    height: 260px;
+    filter: blur(80px);
+}
+
+.galaxy-bg-sidebar {
+    opacity: 1;
+}
+
+@keyframes galaxyMorph {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+    50% {
+        transform: scale(1.4) translate(30px, -20px);
+    }
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+.star {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 9999px;
+    opacity: 0.7;
+    animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.2;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+
+
+
+
+/* === Floating maths symbols in hero (warp + blast, energy levels) === */
+.math-symbol {
+    position: absolute;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 0 6px rgba(15,23,42,0.7);
+    pointer-events: none;
+    white-space: nowrap;
+    transform-origin: center;
+}
+
+/* Energy levels */
+.math-symbol.energy-low {
+    opacity: 0.45;
+    text-shadow: 0 0 4px rgba(15,23,42,0.5);
+}
+
+.math-symbol.energy-medium {
+    opacity: 0.75;
+    text-shadow: 0 0 10px rgba(129,140,248,0.9);
+}
+
+.math-symbol.energy-high {
+    opacity: 1;
+    text-shadow: 0 0 16px rgba(239,246,255,1);
+}
+
+/* Warp symbols: long orbital paths, all >30s */
+.math-warp-1 { top: 8%;  left: 58%; animation: warpA 36s linear infinite; }
+.math-warp-2 { top: 18%; right: 10%; animation: warpB 38s linear infinite; }
+.math-warp-3 { top: 54%; left: 62%;  animation: warpC 42s linear infinite; }
+.math-warp-4 { top: 70%; right: 6%; animation: warpD 44s linear infinite; }
+.math-warp-5 { top: 32%; left: 68%; animation: warpE 48s linear infinite; }
+.math-warp-6 { top: 82%; left: 60%; animation: warpF 52s linear infinite; }
+.math-warp-7 { top: 22%; left: 74%; animation: warpG 58s linear infinite; }
+
+/* Blast symbols: episodic energy bursts */
+.math-blast-1 { top: 16%; left: 52%; animation: blastA 34s ease-in-out infinite; }
+.math-blast-2 { top: 38%; right: 18%; animation: blastB 39s ease-in-out infinite; }
+.math-blast-3 { top: 64%; left: 72%; animation: blastC 46s ease-in-out infinite; }
+.math-blast-4 { top: 10%; right: 28%; animation: blastD 50s ease-in-out infinite; }
+.math-blast-5 { top: 78%; right: 12%; animation: blastE 56s ease-in-out infinite; }
+.math-blast-6 { top: 50%; left: 80%; animation: blastF 60s ease-in-out infinite; }
+.math-blast-7 { top: 30%; left: 86%; animation: blastG 62s ease-in-out infinite; }
+
+/* Warp keyframes – curved, orbit-like paths with subtle scale */
+@keyframes warpA {
+    0%   { transform: translate3d(0, 0, 0) scale(0.9); }
+    25%  { transform: translate3d(16px, 8px, 0) scale(1.05); }
+    55%  { transform: translate3d(6px, 22px, 0) scale(1.12); }
+    80%  { transform: translate3d(-12px, 10px, 0) scale(1.0); }
+    100% { transform: translate3d(0, 0, 0) scale(0.9); }
+}
+@keyframes warpB {
+    0%   { transform: translate3d(0, 0, 0) rotate(-4deg); }
+    30%  { transform: translate3d(-20px, 10px, 0) rotate(2deg); }
+    60%  { transform: translate3d(-10px, 24px, 0) rotate(5deg); }
+    90%  { transform: translate3d(12px, -6px, 0) rotate(0deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(-4deg); }
+}
+@keyframes warpC {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    20%  { transform: translate3d(18px, -10px, 0) scale(1.08); }
+    50%  { transform: translate3d(26px, 8px, 0) scale(0.96); }
+    80%  { transform: translate3d(-12px, 18px, 0) scale(1.1); }
+    100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes warpD {
+    0%   { transform: translate3d(0, 0, 0) rotate(3deg); }
+    28%  { transform: translate3d(-16px, -8px, 0) rotate(-3deg); }
+    55%  { transform: translate3d(-4px, 16px, 0) rotate(1deg); }
+    85%  { transform: translate3d(20px, 10px, 0) rotate(4deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(3deg); }
+}
+@keyframes warpE {
+    0%   { transform: translate3d(0, 0, 0) scale(0.95); }
+    25%  { transform: translate3d(22px, -14px, 0) scale(1.04); }
+    55%  { transform: translate3d(-10px, -18px, 0) scale(1.1); }
+    82%  { transform: translate3d(-8px, 20px, 0) scale(0.9); }
+    100% { transform: translate3d(0, 0, 0) scale(0.95); }
+}
+@keyframes warpF {
+    0%   { transform: translate3d(0, 0, 0) rotate(-2deg); }
+    30%  { transform: translate3d(-22px, 6px, 0) rotate(4deg); }
+    62%  { transform: translate3d(16px, 22px, 0) rotate(-3deg); }
+    88%  { transform: translate3d(4px, -20px, 0) rotate(1deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+}
+@keyframes warpG {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    22%  { transform: translate3d(-16px, 6px, 0) scale(1.06); }
+    48%  { transform: translate3d(-4px, 20px, 0) scale(1.1); }
+    76%  { transform: translate3d(18px, -10px, 0) scale(0.94); }
+    100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Blast keyframes – slow build, then big expansion + fade */
+@keyframes blastA {
+    0%   { transform: scale(0.4); opacity: 0; }
+    15%  { transform: scale(0.7); opacity: 0.4; }
+    40%  { transform: scale(1.2); opacity: 1; }
+    60%  { transform: scale(2.0); opacity: 0.4; }
+    100% { transform: scale(0.4); opacity: 0; }
+}
+@keyframes blastB {
+    0%   { transform: scale(0.3) translateY(0); opacity: 0; }
+    20%  { transform: scale(0.8) translateY(-6px); opacity: 0.5; }
+    45%  { transform: scale(1.4) translateY(-12px); opacity: 1; }
+    70%  { transform: scale(2.1) translateY(-4px); opacity: 0.3; }
+    100% { transform: scale(0.3) translateY(0); opacity: 0; }
+}
+@keyframes blastC {
+    0%   { transform: scale(0.5) translate3d(0, 0, 0); opacity: 0; }
+    18%  { transform: scale(0.9) translate3d(4px, -6px, 0); opacity: 0.6; }
+    45%  { transform: scale(1.5) translate3d(10px, -12px, 0); opacity: 1; }
+    68%  { transform: scale(2.3) translate3d(-4px, -4px, 0); opacity: 0.4; }
+    100% { transform: scale(0.5) translate3d(0, 0, 0); opacity: 0; }
+}
+@keyframes blastD {
+    0%   { transform: scale(0.35); opacity: 0; }
+    22%  { transform: scale(0.9); opacity: 0.7; }
+    48%  { transform: scale(1.6); opacity: 1; }
+    72%  { transform: scale(2.4); opacity: 0.35; }
+    100% { transform: scale(0.35); opacity: 0; }
+}
+@keyframes blastE {
+    0%   { transform: scale(0.4) rotate(0deg); opacity: 0; }
+    20%  { transform: scale(0.9) rotate(8deg); opacity: 0.7; }
+    50%  { transform: scale(1.7) rotate(-4deg); opacity: 1; }
+    75%  { transform: scale(2.5) rotate(0deg); opacity: 0.3; }
+    100% { transform: scale(0.4) rotate(0deg); opacity: 0; }
+}
+@keyframes blastF {
+    0%   { transform: scale(0.3); opacity: 0; }
+    18%  { transform: scale(0.8); opacity: 0.5; }
+    44%  { transform: scale(1.8); opacity: 1; }
+    70%  { transform: scale(2.8); opacity: 0.25; }
+    100% { transform: scale(0.3); opacity: 0; }
+}
+@keyframes blastG {
+    0%   { transform: scale(0.45); opacity: 0; }
+    20%  { transform: scale(0.95); opacity: 0.6; }
+    52%  { transform: scale(1.9); opacity: 1; }
+    78%  { transform: scale(2.6); opacity: 0.3; }
+    100% { transform: scale(0.45); opacity: 0; }
+}
+
+/* Hover burst effect on hero: faster blasts + extra glow on high-energy symbols */
+.hero-galaxy {
+    position: relative;
+    overflow: hidden;
+}
+.hero-galaxy::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(251,251,255,0.28), transparent 65%);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+    pointer-events: none;
+    z-index: 0;
+}
+.hero-galaxy:hover::after {
+    opacity: 1;
+    transform: scale(1.05);
+}
+.hero-galaxy:hover .math-blast {
+    animation-duration: 18s;
+}
+.hero-galaxy:hover .math-symbol.energy-high {
+    text-shadow: 0 0 26px rgba(255,255,255,1);
+    transform: scale(1.12);
+}
+
+/* === Planet + moon orbits in hero background === */
+.planet-orbit {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 9999px;
+    border: 1px dashed rgba(191, 219, 254, 0.35);
+    transform-origin: center;
+    z-index: 0;
+}
+
+.planet-orbit-1 {
+    top: 10%;
+    right: 6%;
+    animation: orbitPlanet1 40s linear infinite;
+}
+
+.planet-orbit-2 {
+    bottom: -10%;
+    right: -4%;
+    width: 200px;
+    height: 200px;
+    animation: orbitPlanet2 55s linear infinite;
+}
+
+.planet {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 30% 30%, #fef9c3, #f97316);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateX(60px);
+    box-shadow: 0 0 12px rgba(248, 250, 252, 0.9);
+}
+
+.planet-small {
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #e0f2fe, #1d4ed8);
+    transform: translate(-50%, -50%) translateX(80px);
+}
+
+.moon-orbit {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 9999px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbitMoon 18s linear infinite;
+}
+
+.moon-orbit-wide {
+    width: 96px;
+    height: 96px;
+    animation-duration: 26s;
+}
+
+.moon {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 30% 30%, #f9fafb, #9ca3af);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateX(24px);
+    box-shadow: 0 0 8px rgba(226, 232, 240, 0.9);
+}
+
+.moon-small {
+    width: 7px;
+    height: 7px;
+    transform: translate(-50%, -50%) translateX(32px);
+}
+
+@keyframes orbitPlanet1 {
+    0%   { transform: rotate(0deg); }
+    50%  { transform: rotate(200deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes orbitPlanet2 {
+    0%   { transform: rotate(0deg); }
+    50%  { transform: rotate(-220deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes orbitMoon {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    50%  { transform: translate(-50%, -50%) rotate(200deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/* Layout fixes for merged profile + chapter sidebar */
+#app-sidebar {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 40;
+    overflow: visible;
+}
+
+/* Make chapter sidebar fit inside profile column on all breakpoints */
+#app-sidebar #sidebar {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Let chapter list scroll nicely within available height */
+#app-sidebar #chapter-list {
+    max-height: calc(100vh - 260px);
+    overflow-y: auto;
+}
+
+
+/* Keep current class label visible when app sidebar is collapsed */
+#app-sidebar.app-sidebar-collapsed #current-class-label {
+    display: none !important;
+}
+/* Hide chapters/sidebar contents when app-sidebar is collapsed */
+#app-sidebar.app-sidebar-collapsed #sidebar,
+#app-sidebar.app-sidebar-collapsed .mt-8.flex-1 {
+    display: none !important;
+}
+/* Collapse: hide ONLY text labels & arrows, keep icons visible */
+#app-sidebar.app-sidebar-collapsed .sidebar-label,
+#app-sidebar.app-sidebar-collapsed .sidebar-arrow,
+#app-sidebar.app-sidebar-collapsed .sidebar-brand {
+    display: none !important;
+}
+
+/* In submenu links, hide the text span (icon is first, text is last) */
+#app-sidebar.app-sidebar-collapsed .sidebar-submenu-link > span:last-child {
+    display: none !important;
+}
+
+/* Center icons when collapsed */
+#app-sidebar.app-sidebar-collapsed .sidebar-menu-button {
+    justify-content: center;
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(10px);
+}
+
+#app-sidebar.app-sidebar-collapsed .sidebar-menu-button > span:first-child {
+    justify-content: center;
+}
+
+#app-sidebar.app-sidebar-collapsed ul {
+    align-items: center;
+}
+
+/* Sidebar galaxy enhancements */
+
+
+#app-sidebar .math-symbol {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Sidebar galaxy blobs — brighter and more visible */
+#app-sidebar .galaxy-blob-1 {
+    background: rgba(255, 220, 255, 0.8);
+}
+#app-sidebar .galaxy-blob-2 {
+    background: rgba(170, 210, 255, 0.8);
+}
+#app-sidebar .galaxy-blob-3 {
+    background: rgba(200, 255, 230, 0.8);
+}
+/* Light translucent surface effect behind sidebar menu items */
+.sidebar-surface {
+    padding: 0.75rem;
+}
+
+/* Each button looks like a light glass chip */
+.sidebar-menu-button {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    border-radius: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.sidebar-menu-button:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+}
+.sidebar-menu-button {
+    color: #1e293b;   /* slate-800 for good contrast */
+    font-weight: 500;
+}
+
+#app-sidebar .material-symbols-outlined {
+    color: #1e293b;  /* icon readability */
+}
+/* Style for the chapter list section - matching frosted sidebar look */
+.sidebar-chapter-section {
+    padding: 1rem 1rem;
+    margin-top: 1.5rem; /* creates space from submenus above */
+}
+
+/* Improve inner spacing for chapter items */
+.sidebar-chapter-section #chapter-list {
+    padding-top: 0.5rem;
+}
+
+
+/* === NUKE: big pulsing radial blast === */
+@keyframes mathNuke {
+    0%   { transform: scale(0.6); opacity: 0; text-shadow: 0 0 6px rgba(255,255,255,0.3); }
+    20%  { transform: scale(1.1); opacity: 1; text-shadow: 0 0 18px rgba(248,250,252,0.9); }
+    50%  { transform: scale(1.8); opacity: 0.45; text-shadow: 0 0 32px rgba(248,250,252,0.9); }
+    100% { transform: scale(0.6); opacity: 0; text-shadow: 0 0 4px rgba(15,23,42,0.6); }
+}
+
+/* === PLANETARY: slow orbital drift === */
+@keyframes mathPlanetary {
+    0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+    30%  { transform: translate3d(6px, -10px, 0) rotate(4deg); }
+    60%  { transform: translate3d(-4px, 8px, 0) rotate(-3deg); }
+    100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+
+/* === SHOOTING STAR: streak across sidebar === */
+@keyframes mathShootingStar {
+    0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+    10%  { opacity: 1; }
+    40%  { transform: translate3d(80px, -40px, 0); opacity: 0.9; text-shadow: 0 0 18px rgba(255,255,255,1); }
+    70%  { transform: translate3d(150px, -70px, 0); opacity: 0; }
+    100% { transform: translate3d(0, 0, 0); opacity: 0; }
+}
+
+/* === SUPER NOVA: burst then fade === */
+@keyframes mathSupernova {
+    0%   { transform: scale(0.4); opacity: 0; }
+    25%  { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px rgba(255,255,255,1); }
+    55%  { transform: scale(2.0); opacity: 0.5; text-shadow: 0 0 32px rgba(255,255,255,0.9); }
+    100% { transform: scale(0.4); opacity: 0; text-shadow: 0 0 4px rgba(15,23,42,0.5); }
+}
+
+/* === AURORA: vertical wavy shimmer === */
+@keyframes mathAurora {
+    0%   { transform: translate3d(0, 0, 0) skewX(0deg); opacity: 0.5; }
+    25%  { transform: translate3d(0, -8px, 0) skewX(8deg); opacity: 0.9; }
+    50%  { transform: translate3d(0, 4px, 0) skewX(-6deg); opacity: 0.7; }
+    75%  { transform: translate3d(0, -6px, 0) skewX(4deg); opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) skewX(0deg); opacity: 0.6; }
+}
+
+/* === FLARES: flickery pulses around edges === */
+@keyframes mathFlare {
+    0%   { transform: scale(0.9); opacity: 0.2; text-shadow: 0 0 4px rgba(248,250,252,0.4); }
+    30%  { transform: scale(1.05); opacity: 0.8; text-shadow: 0 0 14px rgba(248,250,252,0.9); }
+    60%  { transform: scale(0.95); opacity: 0.5; }
+    100% { transform: scale(1.1); opacity: 0.1; text-shadow: 0 0 2px rgba(15,23,42,0.7); }
+}
+
+/* NUKE symbols – center-ish explosive pulses in sidebar */
+.math-nuke-1 {
+    top: 16%;
+    left: 18%;
+    animation: mathNuke 22s ease-in-out infinite;
+}
+.math-nuke-2 {
+    top: 38%;
+    left: 26%;
+    animation: mathNuke 26s ease-in-out infinite;
+}
+.math-nuke-3 {
+    top: 64%;
+    left: 20%;
+    animation: mathNuke 30s ease-in-out infinite;
+}
+
+/* PLANETARY – slow orbit-like movement mid-right */
+.math-planetary-1 {
+    top: 22%;
+    right: 10%;
+    animation: mathPlanetary 32s ease-in-out infinite;
+}
+.math-planetary-2 {
+    top: 40%;
+    right: 6%;
+    animation: mathPlanetary 36s ease-in-out infinite;
+}
+.math-planetary-3 {
+    top: 58%;
+    right: 14%;
+    animation: mathPlanetary 40s ease-in-out infinite;
+}
+.math-planetary-4 {
+    top: 76%;
+    right: 8%;
+    animation: mathPlanetary 44s ease-in-out infinite;
+}
+
+/* SHOOTING STARS – diagonal streaks */
+.math-shooting-1 {
+    top: 18%;
+    left: 5%;
+    animation: mathShootingStar 34s linear infinite;
+}
+.math-shooting-2 {
+    top: 46%;
+    left: 2%;
+    animation: mathShootingStar 38s linear infinite;
+    animation-delay: -10s;
+}
+.math-shooting-3 {
+    top: 68%;
+    left: 4%;
+    animation: mathShootingStar 42s linear infinite;
+    animation-delay: -18s;
+}
+.math-shooting-4 {
+    top: 82%;
+    left: 10%;
+    animation: mathShootingStar 50s linear infinite;
+    animation-delay: -24s;
+}
+
+/* SUPER NOVA – intense bursts scattered around */
+.math-supernova-1 {
+    top: 30%;
+    left: 55%;
+    animation: mathSupernova 40s ease-out infinite;
+}
+.math-supernova-2 {
+    top: 52%;
+    left: 60%;
+    animation: mathSupernova 46s ease-out infinite;
+    animation-delay: -12s;
+}
+.math-supernova-3 {
+    top: 74%;
+    left: 50%;
+    animation: mathSupernova 52s ease-out infinite;
+    animation-delay: -20s;
+}
+
+/* AURORA – vertical shimmering near inner edge */
+.math-aurora-1 {
+    top: 14%;
+    left: 34%;
+    animation: mathAurora 30s ease-in-out infinite;
+}
+.math-aurora-2 {
+    top: 42%;
+    left: 36%;
+    animation: mathAurora 34s ease-in-out infinite;
+    animation-delay: -8s;
+}
+.math-aurora-3 {
+    top: 70%;
+    left: 38%;
+    animation: mathAurora 38s ease-in-out infinite;
+    animation-delay: -16s;
+}
+
+/* FLARES – small flickers around boundaries */
+.math-flare-1 {
+    top: 8%;
+    right: 2%;
+    animation: mathFlare 20s ease-in-out infinite;
+}
+.math-flare-2 {
+    bottom: 8%;
+    right: 4%;
+    animation: mathFlare 24s ease-in-out infinite;
+}
+.math-flare-3 {
+    bottom: 4%;
+    left: 12%;
+    animation: mathFlare 28s ease-in-out infinite;
+}
+/* Default position – centered vertically over the top-right padding of sidebar */
+#app-sidebar-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* Move the center of the circle to the corner */
+    transform: translate(50%, -50%);
+    z-index: 100;
+}
+
+/* Optional: same position when collapsed, just slightly bigger if you like */
+#app-sidebar.app-sidebar-collapsed #app-sidebar-toggle {
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 2.5rem;
+    height: 2.5rem;
+}
+/* When sidebar is collapsed, center icons properly in menu buttons */
+#app-sidebar.app-sidebar-collapsed .sidebar-menu-button {
+    display: flex;
+    justify-content: center !important;   /* force perfect centering */
+    align-items: center;
+    padding-left: 0 !important;           /* remove text padding */
+    padding-right: 0 !important;
+    gap: 0 !important;                    /* remove any spacing */
+}
+
+/* Ensure icon inside button is perfectly centered */
+#app-sidebar.app-sidebar-collapsed .sidebar-menu-button span:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Remove any leftover arrow/icon spacing */
+#app-sidebar.app-sidebar-collapsed .sidebar-menu-button .material-symbols-outlined {
+    margin: 0 auto !important;            /* removes offset */
+}
+
